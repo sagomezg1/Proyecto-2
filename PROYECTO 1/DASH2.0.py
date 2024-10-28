@@ -76,6 +76,7 @@ def update_graph(hour, temp, humidity, wind):
 
     return fig
 
+
 # Callback para mostrar los gráficos estáticos
 @app.callback(
     Output('static_graphs_container', 'children'),
@@ -86,10 +87,9 @@ def show_static_graphs(n_clicks):
         # Rutas de las imágenes
         image_filenames = [
             'static/1.png',  # Imagen 1
-            'static/2.png',          # Imagen 2
-            'static/3.png',          # Imagen 3
-            'static/4.png',          # Imagen 4
-
+            'static/2.png',  # Imagen 2
+            'static/3.png',  # Imagen 3
+            'static/4.png',  # Imagen 4
         ]
 
         # Codificar imágenes en base64
@@ -99,13 +99,13 @@ def show_static_graphs(n_clicks):
         ]
 
         # Crear lista de imágenes en HTML
-        images_html = [html.Img(src='data:image/png;base64,{}'.format(encoded_image)) for encoded_image in images_encoded]
+        images_html = [html.Img(src=f'data:image/png;base64,{encoded_image}', style={'width': '100%'}) for encoded_image in images_encoded]
 
         return html.Div([
             html.H3('Gráficos Estáticos de Costos e Ingresos'),
             *images_html  # Agregar todas las imágenes
         ])
-    return ''
+    return html.Div()
 
 # Callback para mostrar los gráficos movibles
 @app.callback(
@@ -138,8 +138,10 @@ def show_movable_graphs(n_clicks):
             dcc.Graph(figure=fig2),
             dcc.Graph(figure=fig3)
         ])
-    return ''
+    return html.Div()
+
+
 
 # Ejecutar la app
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True, host="0.0.0.0")
